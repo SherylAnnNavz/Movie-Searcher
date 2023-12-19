@@ -106,3 +106,15 @@ function displaySimilarMovies(similarMovies) {
 
 // Initial load of upcoming movies
 getUpcomingMovies();
+
+// Add event listener for search input
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function () {
+    const query = searchInput.value.trim();
+    if (query !== '') {
+        searchMovie(query);
+    } else {
+        // If the search input is empty, reload upcoming movies
+        getUpcomingMovies();
+    }
+});
