@@ -32,8 +32,17 @@ function createMovieCard(movie) {
         <img src="http://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
         <h2>${movie.title}</h2>
     `;
-    movieCard.addEventListener('dblclick', () => showMovieDetails(movie.id));
+
+    // Add event listeners for both click and double-click events
+    movieCard.addEventListener('click', () => goToDetailsPage(movie.id));
+    movieCard.addEventListener('dblclick', () => goToDetailsPage(movie.id));
+
     return movieCard;
+}
+
+// Function to navigate to the details page
+function goToDetailsPage(movieId) {
+    window.location.href = `details.html?movieId=${movieId}`;
 }
 
 // Function to search for a movie based on name
@@ -61,25 +70,21 @@ async function showMovieDetails(movieId) {
 
 // Function to display movie details
 function displayMovieDetails(movieDetails) {
-    const mainContent = document.getElementById('mainContent');
-    mainContent.innerHTML = '';
-
-    const detailPage = document.createElement('div');
-    detailPage.className = 'detail-page';
-    detailPage.innerHTML = `
+    const movieDetailsContainer = document.getElementById('movieDetails');
+    movieDetailsContainer.innerHTML = `
         <img src="http://image.tmdb.org/t/p/w500/${movieDetails.poster_path}" alt="${movieDetails.title}">
         <h1>${movieDetails.title}</h1>
         <p>${movieDetails.overview}</p>
         <!-- Add more details as needed -->
 
         <h2>Similar Movies</h2>
-        <div id="similarMovies"></div>
+        <ul id="similarMoviesList"></ul>
+
+        <button onclick="goBack()">Go Back</button>
     `;
 
     // Fetch and display similar movies
     getSimilarMovies(movieDetails.id);
-
-    mainContent.appendChild(detailPage);
 }
 
 // Function to fetch and display similar movies
@@ -95,13 +100,18 @@ async function getSimilarMovies(movieId) {
 
 // Function to display similar movies
 function displaySimilarMovies(similarMovies) {
-    const similarMoviesContainer = document.getElementById('similarMovies');
-    similarMoviesContainer.innerHTML = '';
+    const similarMoviesList = document.getElementById('similarMoviesList');
 
     similarMovies.forEach(movie => {
-        const movieCard = createMovieCard(movie);
-        similarMoviesContainer.appendChild(movieCard);
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<a href="details.html?movieId=${movie.id}" onclick="showMovieDetails(${movie.id}); return false;">${movie.title}</a>`;
+        similarMoviesList.appendChild(listItem);
     });
+}
+
+// Function to go back to the index page
+function goBack() {
+    window.location.href = 'index.html';
 }
 
 // Initial load of upcoming movies
@@ -118,3 +128,11 @@ searchInput.addEventListener('input', function () {
         getUpcomingMovies();
     }
 });
+
+// Check if the URL contains a movie ID (for direct linking to details page)
+const urlParams = new URLSearchParams(window.location.search);
+const movieIdFromUrl = urlParams.get('movieId');
+
+if (movieIdFromUrl) {
+    showMovieDetails(movieIdFromUrl);
+}
