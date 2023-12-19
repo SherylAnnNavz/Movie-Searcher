@@ -61,6 +61,10 @@ async function searchMovie(query) {
 async function showMovieDetails(movieId) {
     try {
         const response = await fetch(`${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=en-US`);
+        if (!response.ok) {
+            throw new Error(`Error fetching movie details: ${response.statusText}`);
+        }
+
         const movieDetails = await response.json();
         displayMovieDetails(movieDetails);
     } catch (error) {
@@ -68,8 +72,11 @@ async function showMovieDetails(movieId) {
     }
 }
 
+
 // Function to display movie details
 function displayMovieDetails(movieDetails) {
+    console.log('Movie Details:', movieDetails);
+
     const movieDetailsContainer = document.getElementById('movieDetails');
     movieDetailsContainer.innerHTML = `
         <img src="http://image.tmdb.org/t/p/w500/${movieDetails.poster_path}" alt="${movieDetails.title}">
@@ -86,6 +93,7 @@ function displayMovieDetails(movieDetails) {
     // Fetch and display similar movies
     getSimilarMovies(movieDetails.id);
 }
+
 
 // Function to fetch and display similar movies
 async function getSimilarMovies(movieId) {
