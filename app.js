@@ -1,5 +1,5 @@
 // Your JavaScript code goes here
-const apiKey = '1bfdbff05c2698dc917dd28c08d41096';
+const apiKey = '364e6503bcd137e4d207daa2c70abbe4';
 const baseUrl = 'https://api.themoviedb.org/3';
 
 // Function to fetch upcoming movies
