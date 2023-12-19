@@ -1,12 +1,12 @@
-// Your JavaScript code goes here
-const apiKey = '364e6503bcd137e4d207daa2c70abbe4';
+const apiKey = '1bfdbff05c2698dc917dd28c08d41096';
 const baseUrl = 'https://api.themoviedb.org/3';
 
 // Function to fetch upcoming movies
 async function getUpcomingMovies() {
     try {
-        const response = await axios.get(`${baseUrl}/movie/upcoming?api_key=${apiKey}&language=en-US&page=1`);
-        const movies = response.data.results;
+        const response = await fetch(`${baseUrl}/movie/upcoming?api_key=${apiKey}&language=en-US&page=1`);
+        const data = await response.json();
+        const movies = data.results;
         displayMovies(movies);
     } catch (error) {
         console.error('Error fetching upcoming movies:', error);
@@ -19,22 +19,40 @@ function displayMovies(movies) {
     mainContent.innerHTML = '';
 
     movies.forEach(movie => {
-        const movieCard = document.createElement('div');
-        movieCard.className = 'movie-card';
-        movieCard.innerHTML = `
-            <img src="http://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
-            <h2>${movie.title}</h2>
-        `;
-        movieCard.addEventListener('dblclick', () => showMovieDetails(movie.id));
+        const movieCard = createMovieCard(movie);
         mainContent.appendChild(movieCard);
     });
 }
 
-// Function to fetch and display movie details
+// Function to create a movie card
+function createMovieCard(movie) {
+    const movieCard = document.createElement('div');
+    movieCard.className = 'movie-card';
+    movieCard.innerHTML = `
+        <img src="http://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
+        <h2>${movie.title}</h2>
+    `;
+    movieCard.addEventListener('dblclick', () => showMovieDetails(movie.id));
+    return movieCard;
+}
+
+// Function to search for a movie based on name
+async function searchMovie(query) {
+    try {
+        const response = await fetch(`${baseUrl}/search/movie?api_key=${apiKey}&query=${query}`);
+        const data = await response.json();
+        const movies = data.results;
+        displayMovies(movies);
+    } catch (error) {
+        console.error('Error searching for a movie:', error);
+    }
+}
+
+// Function to display comprehensive information about a movie
 async function showMovieDetails(movieId) {
     try {
-        const response = await axios.get(`${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=en-US`);
-        const movieDetails = response.data;
+        const response = await fetch(`${baseUrl}/movie/${movieId}?api_key=${apiKey}&language=en-US`);
+        const movieDetails = await response.json();
         displayMovieDetails(movieDetails);
     } catch (error) {
         console.error('Error fetching movie details:', error);
@@ -67,9 +85,9 @@ function displayMovieDetails(movieDetails) {
 // Function to fetch and display similar movies
 async function getSimilarMovies(movieId) {
     try {
-        const response = await axios.get(`${baseUrl}/movie/${movieId}/similar?api_key=${apiKey}&language=en-US&page=1`);
-        const similarMovies = response.data.results;
-        displaySimilarMovies(similarMovies);
+        const response = await fetch(`${baseUrl}/movie/${movieId}/similar?api_key=${apiKey}&language=en-US&page=1`);
+        const similarMovies = await response.json();
+        displaySimilarMovies(similarMovies.results);
     } catch (error) {
         console.error('Error fetching similar movies:', error);
     }
@@ -81,13 +99,7 @@ function displaySimilarMovies(similarMovies) {
     similarMoviesContainer.innerHTML = '';
 
     similarMovies.forEach(movie => {
-        const movieCard = document.createElement('div');
-        movieCard.className = 'movie-card';
-        movieCard.innerHTML = `
-            <img src="http://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
-            <h2>${movie.title}</h2>
-        `;
-        movieCard.addEventListener('dblclick', () => showMovieDetails(movie.id));
+        const movieCard = createMovieCard(movie);
         similarMoviesContainer.appendChild(movieCard);
     });
 }
