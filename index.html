@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Movie Searcher</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Movies</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/d5635d350d.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <header>
-        <h1>Movie Searcher</h1>
-        <input type="text" id="searchInput" placeholder="Search for a movie..." style="text-align: center;">
-    </header>
-    <main id="mainContent">
-        <!-- Upcoming movies will be displayed here -->
-    </main>
-    <script src="app.js"></script>
+    <div class="header">
+        <div class="header-container">
+            <div>
+                <h1>Search for movies</h1>
+            </div>
+            <div class="header-link">
+                <span><a href="favorite.html">Watchlist</a></span>
+            </div>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Type movie name here..." class="search-bar" id="Input">
+            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+    <div class="main">
+        <div class="fav-container">
+        </div>
+        <div class="upcoming-movies">
+            <h2>Upcoming Movies</h2>
+            <div class="upcoming-container">
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
 </body>
+
 </html>
