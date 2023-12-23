@@ -36,13 +36,14 @@ main {
     padding: 10px;
     cursor: pointer;
     display: inline-block;
-    max-width: 300px; /* Set a maximum width for each movie card */
+    width: 300px; /* Set a fixed width for each movie card */
+    height: 400px; /* Set a fixed height for each movie card */
     box-sizing: border-box;
     vertical-align: top; /* Align cards to the top */
 }
 
 .movie-card img {
     width: 100%;
-    max-height: 300px;
+    height: 80%; /* Set a percentage height for all movie images */
     object-fit: cover; /* Maintain aspect ratio and cover the container */
 }
