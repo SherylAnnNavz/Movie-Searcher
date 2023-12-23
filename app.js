@@ -91,9 +91,12 @@ async function showMovieDetails(movieId) {
         if (response.ok) {
             const movieDetails = await response.json();
             console.log('Movie Details:', movieDetails);
+
+            // Display movie details
             displayMovieDetails(movieDetails);
+
             // Fetch and display similar movies
-            await getSimilarMovies(movieId);
+            getSimilarMovies(movieId);
         } else {
             console.error('Error fetching movie details:', response.statusText);
         }
