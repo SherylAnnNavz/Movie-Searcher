@@ -52,3 +52,12 @@ main {
 .movie-card:hover {
     background-color: #f0f0f0; /* Change the background color when hovering */
 }
+
+#similarMoviesList {
+    list-style: none;
+    padding: 0;
+}
+
+#similarMoviesList li {
+    margin: 5px;
+}
