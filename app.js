@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial load of upcoming movies
     getUpcomingMovies();
 
-    // Add event listener for search input
+    // Add event listener for search input (after DOM is loaded)
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function () {
         const query = searchInput.value.trim();
@@ -53,14 +53,19 @@ function displayMovies(movies) {
 function createMovieCard(movie) {
     const movieCard = document.createElement('div');
     movieCard.className = 'movie-card';
-    movieCard.innerHTML = `
-        <img src="http://image.tmdb.org/t/p/w500/${movie.poster_path}" alt="${movie.title}">
-        <h2>${movie.title}</h2>
-    `;
 
-    // Add event listeners for both click and double-click events
-    movieCard.addEventListener('click', () => goToDetailsPage(movie.id));
-    movieCard.addEventListener('dblclick', () => goToDetailsPage(movie.id));
+    const image = document.createElement('img');
+    image.src = `http://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+    image.alt = movie.title;
+
+    // Add event listener to the movie image
+    image.addEventListener('click', () => goToDetailsPage(movie.id));
+
+    const title = document.createElement('h2');
+    title.textContent = movie.title;
+
+    movieCard.appendChild(image);
+    movieCard.appendChild(title);
 
     return movieCard;
 }
@@ -105,12 +110,11 @@ async function showMovieDetails(movieId) {
     }
 }
 
-
 // Function to display movie details
 function displayMovieDetails(movieDetails) {
     console.log('Displaying Movie Details:', movieDetails);
 
-    const movieDetailsContainer = document.getElementById('movieDetails');
+    const movieDetailsContainer = document.getElementById('mainContentDetails');
     movieDetailsContainer.innerHTML = `
         <h1>${movieDetails.title}</h1>
         <p>${movieDetails.overview}</p>
