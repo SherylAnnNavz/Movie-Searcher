@@ -102,6 +102,7 @@ async function showMovieDetails(movieId) {
     }
 }
 
+
 // Function to display movie details
 function displayMovieDetails(movieDetails) {
     console.log('Displaying Movie Details:', movieDetails);
