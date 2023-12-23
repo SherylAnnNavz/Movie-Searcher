@@ -16,7 +16,7 @@ async function singleMovie() {
     var urlQueryParams = new URLSearchParams(window.location.search);
     var id = urlQueryParams.get('id')
     console.log(id);
-    const url = `https://www.omdbapi.com/?i=${id}&apikey=${omdbApiKey}`
+    const url = `https://www.omdbapi.com/?i=${id}&apikey=${omdbApiKey}`     
     const res = await fetch(`${url}`);
     const data = await res.json();
     console.log(data);
