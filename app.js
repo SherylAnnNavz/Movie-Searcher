@@ -93,7 +93,7 @@ async function showMovieDetails(movieId) {
             console.log('Movie Details:', movieDetails);
             displayMovieDetails(movieDetails);
             // Fetch and display similar movies
-            getSimilarMovies(movieId);
+            await getSimilarMovies(movieId);
         } else {
             console.error('Error fetching movie details:', response.statusText);
         }
